@@ -5,11 +5,17 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
-  const corsOrigins = process.env.CORS_ORIGIN === '*'
-    ? true
-    : (process.env.CORS_ORIGIN?.split(',').map((o) => o.trim()).filter(Boolean) ?? ['http://localhost:4200']);
+  const isProduction = process.env.NODE_ENV === 'production';
+  let corsOrigin: boolean | string | string[] | ((origin: string) => boolean) = ['http://localhost:4200'];
+  if (process.env.CORS_ORIGIN === '*') {
+    corsOrigin = true;
+  } else if (process.env.CORS_ORIGIN?.length) {
+    corsOrigin = process.env.CORS_ORIGIN.split(',').map((o) => o.trim()).filter(Boolean);
+  } else if (isProduction) {
+    corsOrigin = (origin: string) => !origin || /^https:\/\/[\w.-]+\.vercel\.app$/.test(origin);
+  }
   app.enableCors({
-    origin: corsOrigins,
+    origin: corsOrigin,
     credentials: true,
   });
   app.useGlobalPipes(
