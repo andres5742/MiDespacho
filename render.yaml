@@ -1,0 +1,24 @@
+# Render Blueprint (opcional): despliega API + PostgreSQL
+# New > Blueprint > Conectar repo. Si no usas Blueprint, sigue README-RENDER.md
+
+services:
+  - type: web
+    name: midespacho-api
+    runtime: node
+    rootDir: apps/api
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TYPEORM_SYNC
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: midespacho-db
+          property: connectionString
+
+databases:
+  - name: midespacho-db
+    databaseName: midespacho
+    plan: free

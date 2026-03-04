@@ -1,0 +1,21 @@
+{
+  "name": "midespacho-reto-tecnico",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "install:api": "npm --prefix apps/api install",
+    "install:web": "npm --prefix apps/web install",
+    "install:all": "npm run install:api && npm run install:web",
+    "dev:api": "npm --prefix apps/api run start:dev",
+    "dev:web": "npm --prefix apps/web run start",
+    "dev": "concurrently -k -n API,WEB -c cyan,magenta \"npm run dev:api\" \"npm run dev:web\"",
+    "build:api": "npm --prefix apps/api run build",
+    "build:web": "npm --prefix apps/web run build",
+    "build": "npm run build:api && npm run build:web",
+    "start:ssr": "npm --prefix apps/web run serve:ssr:web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
+
