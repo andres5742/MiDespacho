@@ -29,4 +29,4 @@ O desde la raíz: `npm run install:all` y `npm run dev`.
 - Root: `apps/api`
 - Build: `npm install --include=dev && npm run build`
 - Start: `npm run start:prod`
-- Env: `NODE_ENV=production`, `DATABASE_URL`, `TYPEORM_SYNC=true`
+- Env: `NODE_ENV=production`, `DATABASE_URL`, `TYPEORM_SYNC=true`, `CORS_ORIGIN` = URL del front (Vercel) o `*`
